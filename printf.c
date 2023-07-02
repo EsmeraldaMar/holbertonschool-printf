@@ -15,20 +15,19 @@ int _printf(const char *format, ...)
 	int found = 0;
 	int length = 0;
 	va_list box;
+
 	print_t printf_struct[] = {
 		{"c", printf_char},
 		{"s", printf_string},
 		{"i", printf_integer},
-		{"d", printf_integer},
-		{NULL, NULL}
+		{"d", printf_integer}
 	};
-
 	va_start(box, format);
 	while (format && format[i])
 	{
 		if (format[i] == '%' && format[i + 1])
 		{
-			while (printf_struct[j].op != NULL)
+			while (j < 4)
 			{
 				if (*printf_struct[j].op == format[i + 1])
 				{
@@ -45,9 +44,7 @@ int _printf(const char *format, ...)
 			}
 		}
 		else if (found == 0)
-		{
 			length += _putchar(format[i]);
-		}
 		else
 			found = 0;
 		i++;
