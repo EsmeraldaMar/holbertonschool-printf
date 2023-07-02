@@ -9,7 +9,7 @@
 int printf_integer(va_list box)
 {
 	int i = 0;
-	int length;
+	int length = 0;
 	int digits = 0;
 	int integer = va_arg(box, int);
 	int copy = integer;
@@ -34,7 +34,7 @@ int printf_integer(va_list box)
 	}
 	str[i] = integer % 10 + 48;
 	str[i + 1] = '\0';
-	length = i;
+	length = length + i;
 	while (i >= 0)
 	{
 		_putchar(str[i]);
