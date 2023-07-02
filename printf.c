@@ -1,5 +1,13 @@
 #include "main.h"
 
+
+/**
+ * printd - prints integer but not zero
+ *
+ * @d: integer to be printed
+ *
+ * Return: length
+ */
 int printd(int d)
 {
 	if(d == 0) {
