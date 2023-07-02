@@ -15,6 +15,11 @@ int printf_integer(va_list box)
 	int copy = integer;
 	char *str;
 
+	if (integer < 0)
+	{
+		length += _putchar('-');
+		integer = integer * -1;
+	}
 	while (copy / 10 > 0)
 	{
 		digits = digits + 1;
