@@ -40,6 +40,7 @@ int printf_integer(va_list box)
 		_putchar(str[i]);
 		i--;
 	}
+	length++;
 	return (length);
 }
 
