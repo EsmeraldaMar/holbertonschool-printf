@@ -18,6 +18,8 @@ int _printf(const char *format, ...)
 	print_t printf_struct[] = {
 		{"c", printf_char},
 		{"s", printf_string},
+		{"i", printf_integer},
+		{"d", printf_integer},
 		{NULL, NULL}
 	};
 
