@@ -1,5 +1,21 @@
 #include "main.h"
 
+int printd(int d)
+{
+	if(d == 0) {
+		return 0;
+	}
+
+	if(d < 0) {
+		putchar('-');
+		return printd(-d) + 1;
+	}
+
+	int r = printd(d / 10);
+	putchar(d % 10 + '0');
+	return r + 1;
+}
+
 /**
  * _printf - print stuff
  *
@@ -8,50 +24,41 @@
  *
  * Return: length
  */
-int _printf(const char *format, ...)
-{
-	int i = 0;
-	int j = 0;
-	int found = 0;
-	int length = 0;
-	va_list box;
-	print_t printf_struct[] = {
-		{"c", printf_char},
-		{"s", printf_string},
-		{"i", printf_integer},
-		{"d", printf_integer},
-		{NULL, NULL}
-	};
-
-	va_start(box, format);
-	while (format && format[i])
+int _printf(const char *format, ...) {
+	int cnt = 0;
+	int len = strlen(format);
+	va_list args;
+	va_start(args, format);
+	for(int i = 0; i < len; i++)
 	{
-		if (format[i] == '%' && format[i + 1])
-		{
-			while (printf_struct[j].op != NULL)
-			{
-				if (*printf_struct[j].op == format[i + 1])
-				{
-					length += printf_struct[j].f(box);
-					found = 1;
+		if(format[i] != '%') {
+			putchar(format[i]);
+			cnt++;
+		} else {
+			i++;
+			if(format[i] == '%'){
+				putchar('%');
+				cnt++;
+			} else if(format[i] == 'c') {
+				putchar(va_arg(args, char));
+				cnt++;
+			} else if(format[i] == 'd' || format[i] == 'i') {
+				int d = va_arg(args, int);
+				if(d == 0) {
+					putchar('0');
+					cnt++;
+				} else {
+					cnt += printd(d);
 				}
-				j++;
-			}
-			j = 0;
-			if (format[i + 1] == '%')
-			{
-				length += _putchar('%');
-				i++;
+			} else if(format[i] == 's') {
+				for(char *s = va_arg(args, char *); *s; s++){
+					putchar(*s);
+					cnt++;
+				}
 			}
 		}
-		else if (found == 0)
-		{
-			length += _putchar(format[i]);
-		}
-		else
-			found = 0;
-		i++;
 	}
-	return (length);
+	va_end(args);
+	return cnt;
 }
 
